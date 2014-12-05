@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}FaceLogin - Login Page{% endblock %}
+
+{% block main %}
+    <div class="jumbotron">
+        <h1>FaceLogin</h1>
+        <p>This site enables OAUTH v.2 authentication.</p>
+        <div>
+        {% if is_logged_in %}
+            <p>You are logged in with Google User: {{ user_nick }}</p>
+        {% else %}
+            <a href="{{ login_url }}">
+                <img src="img/Red-signin_Long_base_44dp.png" width="30%">
+            </a>           
+        {% endif %}
+        </div>
+    </div>
+    
+    <div class="page-header">
+        <h1>Login</h1>
+    </div>
+    
+    <p>
+        <button type="button" class="btn btn-default">Login with OAuth site</button>
+        <button type="button" class="btn btn-primary">Login with Twitter</button>
+        <button type="button" class="btn btn-success">Login with Facebook</button>
+        <button type="button" class="btn btn-info">Login with Pinterest</button>
+    </p>
+{% endblock %}
