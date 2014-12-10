@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}FaceLogin - Registered Users{% endblock %}
+
+{% block main %}
+	<div class="page-header">
+        <h1>Registered Users</h1>
+    </div>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Nick</th>
+                <th>eMail</th>
+                <th>Added</th>
+                <th>Delete</th> 
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for user in users %}
+        <tr>
+            <td>{{user.name}}</td>
+            <td>{{user.nickname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.added}}</td>
+            <td><a type="button" class="btn btn-xs btn-danger"
+                        href="/deleteuser?user={{user.email}}">x</a></td>
+        </tr>
+        {% else %}
+        <tr>&nbsp;</tr>
+        <tr>
+            <td colspan="4">Sorry, no registered users on database.</td>
+        </tr>
+        {% endfor %}
+        <tr>&nbsp;</tr>
+        </tbody>
+    </table>
+    
+    <div>
+        <button type="button" class="btn btn-warning">Delete all users</button>
+        <button type="button" class="btn btn-link" onclick="location.href='/'">Back to home</button>
+    </div>
+{% endblock %}
+

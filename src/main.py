@@ -10,11 +10,12 @@
 
 
 import logging
-import jinja2
-import webapp2
 import os
 
-import google.appengine.api.users as users
+import jinja2
+import webapp2
+
+import pages
 
 logging.getLogger().setLevel(logging.DEBUG)  
 
@@ -25,34 +26,14 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-
-class MainPage(webapp2.RequestHandler):
-    
-    def get(self):
-        user = users.get_current_user()
-        isin = False
-        nick = ""
-        
-        if user:
-            logging.info('Logged in with ' + user.nickname())
-            isin = True
-            nick = user.nickname()
-        else:
-            logging.info('User not logged')
-
-        template_values = {
-            'login_url': users.create_login_url('/'),
-            'logout_url': users.create_logout_url('/'),
-            'is_logged_in': isin,
-            'user_nick': nick
-        }
-
-        template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render(template_values))
-
-
 APPLICATION = webapp2.WSGIApplication(
-                            [ ('/', MainPage)
+                            [ ('/', pages.MainPage),
+                              ('/users', pages.Users),
+                              ('/deleteuser', pages.DeleteUser)
                              ], debug = True)
+
+def log(message):
+    logging.debug('[*** '+ message + '***]')
+
                              
 
