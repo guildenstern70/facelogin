@@ -25,8 +25,15 @@
             <td>{{user.nickname}}</td>
             <td>{{user.email}}</td>
             <td>{{user.added}}</td>
-            <td><a type="button" class="btn btn-xs btn-danger"
-                        href="/deleteuser?user={{user.email}}">x</a></td>
+            <td>
+            {% if user.email == currentuser %}
+                &nbsp;
+            {% else %}
+                <a type="button" class="btn btn-xs btn-danger"
+                        href="/deleteuser?user={{user.email}}">x</a>
+            {% endif %}
+                        
+            </td>
         </tr>
         {% else %}
         <tr>&nbsp;</tr>

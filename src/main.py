@@ -26,11 +26,18 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': 'bludream',
+}
+
 APPLICATION = webapp2.WSGIApplication(
                             [ ('/', pages.MainPage),
                               ('/users', pages.Users),
-                              ('/deleteuser', pages.DeleteUser)
-                             ], debug = True)
+                              ('/deleteuser', pages.DeleteUser),
+                              ('/login', pages.Login),
+                              ('/logout', pages.Logout)
+                             ], debug = True, config = config)
 
 def log(message):
     logging.debug('[*** '+ message + '***]')

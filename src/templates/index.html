@@ -3,30 +3,53 @@
 {% block title %}FaceLogin - Login Page{% endblock %}
 
 {% block main %}
+
+    <div id="fb-root"></div>
+
+    <script src="js/facebook_login.js"></script>
+
     <div class="jumbotron">
         <h1>FaceLogin</h1>
         <p>This site enables OAUTH v.2 authentication.</p>
         <div>
         {% if is_logged_in %}
-            <p>You are logged in with Google User: {{ user_nick }}</p>
+            <p>You are logged in with User: {{ user_nick }}</p>
         {% else %}
-            <a href="{{ login_url }}">
-                <img src="img/Red-signin_Long_base_44dp.png" width="30%">
-            </a>           
+        
+            <table>
+                <tr>
+                    <td>
+                        <a href="{{ login_url }}">
+                            <img src="img/Red-signin.png" width="80px">
+                        </a>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <form action="/" method="POST">
+                        <input type="hidden" id="name">
+                        <input type="hidden" id="email">
+                        <input type="hidden" id="nick">
+                        
+                        <div class="fb-login-button" 
+                             data-max-rows="1" data-size="large" 
+                             data-show-faces="false" data-auto-logout-link="false"
+                             scope="public_profile,email" onlogin="checkLoginState();"></div>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        
+            
+            <!--  
+            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+            </fb:login-button>
+            -->
+        
+                   
         {% endif %}
         </div>
     </div>
-    
-    <div class="page-header">
-        <h1>Login</h1>
-    </div>
-    
-    <p>
-        <button type="button" class="btn btn-primary">Login with Twitter</button>
-        <button type="button" class="btn btn-success">Login with Facebook</button>
-        <button type="button" class="btn btn-info">Login with Pinterest</button>
-    </p>
-    
+
     <div class="page-header">
         <h1>Users</h1>
     </div>
@@ -34,4 +57,10 @@
     <p>
         Click <a href="users/">here</a> to see a list of registered users.
     </p>
+    
+    <div class="page-header">
+    <h1>Current status</h1>
+    </div>
+    <div id="status">Not logged in.</div>
+    
 {% endblock %}
