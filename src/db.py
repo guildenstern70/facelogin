@@ -12,7 +12,7 @@ class DbUser(ndb.Model):
     
     @staticmethod
     def get_from_login(logged_user):
-        """ Get the user record from Google user """
+        """ Get the user record from login user """
         user_key = ndb.Key('DbUser', logged_user.email)
         return user_key.get()
     
@@ -40,7 +40,7 @@ class DbUser(ndb.Model):
         main.log('User updated or added. ')
     
     def __repr__(self):
-        return "DbUser [user="+self.email+"]"
+        return "DbUser [user="+self.email+", nick="+self.nickname+"]"
     
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -77,7 +77,7 @@ class Queries():
     def update_or_register_user(logged_in_user):
         user_record = DbUser.get_from_login(logged_in_user)
         if (user_record != None):
-            main.log('User found on DB... ')
+            main.log('User found on DB: ' + str(user_record))
             if (user_record.name != logged_in_user.name):
                 main.log('Updating name from ' + user_record.name + ' to ' + logged_in_user.name)
                 user_record.name = logged_in_user.name
