@@ -15,11 +15,10 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
-            <li><a href="users">Users</a></li>
-         {% if is_logged_in %}
-            <li><a href="{{logout_url}}">Log out</a></li>
-         {% else %}
-            <li><a href="{{login_url}}">Log in with Google</a></li>
+         {% if loginobj.is_logged %}
+            <li><a href="/users">Users</a></li>
+            <li><a href="/account">Account</a></li>
+            <li><a href="javascript:logoutFromFb();">Log out</a></li>
          {% endif %}
           </ul>
         </div><!--/.nav-collapse -->

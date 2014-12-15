@@ -12,10 +12,26 @@
         <h1>FaceLogin</h1>
         <p>This site enables OAUTH v.2 authentication.</p>
         <div>
-        {% if is_logged_in %}
-            <p>You are logged in with User: {{ user_nick }}</p>
-        {% else %}
         
+        <form id="loginform" action="/" method="POST">
+            <input type="hidden" id="is_logged_into_app" value="{{loginobj.is_logged}}">
+
+        
+        {% if loginobj.is_logged %}
+        
+            <p>Welcome to FaceLogin, {{ loginobj.nick }}!</p>
+            <p><a href="javascript:logoutFromFb();">Logout</a></p>
+            
+            <input type="hidden" name="name" id="name" value="{{loginobj.name}}">
+            <input type="hidden" name="email" id="email" value="{{loginobj.email}}">
+            <input type="hidden" name="nick" id="nick" value="{{loginobj.nick}}">
+            
+        {% else %}
+            
+            <input type="hidden" name="name" id="name">
+            <input type="hidden" name="email" id="email">
+            <input type="hidden" name="nick" id="nick">
+            
             <table>
                 <tr>
                     <td>
@@ -24,43 +40,32 @@
                         </a>
                     </td>
                     <td>&nbsp;</td>
-                    <td>
-                        <form action="/" method="POST">
-                        <input type="hidden" id="name">
-                        <input type="hidden" id="email">
-                        <input type="hidden" id="nick">
-                        
+                    <td>                    
                         <div class="fb-login-button" 
                              data-max-rows="1" data-size="large" 
                              data-show-faces="false" data-auto-logout-link="false"
                              scope="public_profile,email" onlogin="checkLoginState();"></div>
-                        </form>
                     </td>
                 </tr>
             </table>
-        
-            
-            <!--  
-            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-            </fb:login-button>
-            -->
-        
-                   
+                  
         {% endif %}
+        </form><!-- loginform  -->
         </div>
     </div>
 
+    {% if loginobj.is_logged %}
     <div class="page-header">
         <h1>Users</h1>
     </div>
-    
     <p>
-        Click <a href="users/">here</a> to see a list of registered users.
+        Click <a href="/users">here</a> to see a list of registered users.
     </p>
+    {% endif %}
     
     <div class="page-header">
     <h1>Current status</h1>
     </div>
-    <div id="status">Not logged in.</div>
+    <div id="status">Not logged in. (IsLogged = {{loginobj.is_logged}})</div>
     
 {% endblock %}

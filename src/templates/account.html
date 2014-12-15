@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}FaceLogin - My Account{% endblock %}
+
+{% block main %}
+    <div class="page-header">
+        <h1>My Account</h1>
+    </div>
+    
+    <table class="table table-striped">
+
+        <tr>
+            <td>Name: </td>
+            <td>{{user.nickname}}</td>
+        </tr>
+        
+        <tr>
+            <td>eMail: </td>
+            <td>{{user.nickname}}</td>
+        </tr>
+        
+        <tr>
+            <td>Nickname: </td>
+            <td>{{user.nickname}}</td>
+        </tr>
+        
+        <tr>
+            <td>Added: </td>
+            <td>{{user.nickname}}</td>
+        </tr>
+
+    </table>
+    
+    <div>
+        <button type="button" class="btn btn-link" onclick="location.href='/'">Back to home</button>
+    </div>
+{% endblock %}

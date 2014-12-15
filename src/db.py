@@ -46,6 +46,10 @@ class Queries():
     
     @staticmethod
     def get_db_user(user_email):
+        
+        if user_email == '':
+            return None
+        
         user_key = ndb.Key('DbUser', user_email)
         return user_key.get()
       
