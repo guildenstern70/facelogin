@@ -4,10 +4,6 @@
 
 {% block main %}
 
-    <div id="fb-root"></div>
-
-    <script src="js/facebook_login.js"></script>
-
     <div class="jumbotron">
         <h1>FaceLogin</h1>
         <p>This site enables OAUTH v.2 authentication.</p>
@@ -19,8 +15,8 @@
         
         {% if loginobj.is_logged %}
         
-            <p>Welcome to FaceLogin, {{ loginobj.nick }}!</p>
-            <p><a href="javascript:logoutFromFb();">Logout</a></p>
+            <p>Welcome to FaceLogin, {{ loginobj.nick }}!<br>
+            <a href="{{logout_url}}">Logout</a></p>
             
             <input type="hidden" name="name" id="name" value="{{loginobj.name}}">
             <input type="hidden" name="email" id="email" value="{{loginobj.email}}">
@@ -35,7 +31,7 @@
             <table>
                 <tr>
                     <td>
-                        <a href="{{ login_url }}">
+                        <a href="{{ google_login_url }}">
                             <img src="img/Red-signin.png" width="80px">
                         </a>
                     </td>

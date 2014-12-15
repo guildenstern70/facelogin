@@ -18,7 +18,7 @@
          {% if loginobj.is_logged %}
             <li><a href="/users">Users</a></li>
             <li><a href="/account">Account</a></li>
-            <li><a href="javascript:logoutFromFb();">Log out</a></li>
+            <li><a href="{{logout_url}}">Log out</a></li>
          {% endif %}
           </ul>
         </div><!--/.nav-collapse -->

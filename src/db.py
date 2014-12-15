@@ -37,10 +37,17 @@ class DbUser(ndb.Model):
                         nickname = nick)
         main.log('Adding user ' + usermail + ' to DB...')
         userdb.put()
-        main.log('User added. ')
+        main.log('User updated or added. ')
     
     def __repr__(self):
         return "DbUser [user="+self.email+"]"
+    
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__)
+            and self.__dict__ == other.__dict__)
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
     
 class Queries():
     
@@ -67,10 +74,18 @@ class Queries():
             main.log('Cannot delete: unknown user ' + user_email)
             
     @staticmethod    
-    def check_or_register_user(logged_in_user):
+    def update_or_register_user(logged_in_user):
         user_record = DbUser.get_from_login(logged_in_user)
         if (user_record != None):
             main.log('User found on DB... ')
+            if (user_record.name != logged_in_user.name):
+                main.log('Updating name from ' + user_record.name + ' to ' + logged_in_user.name)
+                user_record.name = logged_in_user.name
+                user_record.put()
+            if (user_record.nickname != logged_in_user.nick):
+                main.log('Updating nick from ' + user_record.nickname + ' to ' + logged_in_user.nick)
+                user_record.nickname = logged_in_user.nick
+                user_record.put()
         else:
             main.log('User not found on DB: adding')
             DbUser.create_from_login(logged_in_user)

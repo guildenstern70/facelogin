@@ -1,6 +1,6 @@
 from db import Queries
 
-class Logged(object):
+class WebUser(object):
     
     def __init__(self):
         self.__logged = False
@@ -14,11 +14,15 @@ class Logged(object):
     def __set_logged(self, value):
         self.__logged = value
         
+    def __update_or_create_on_db(self):
+        Queries.update_or_register_user(self)
+        
     def login(self, name, nickname, email):
         self.__email = email
         self.__name = name
         self.__nickname = nickname
         self.__logged = True
+        self.__update_or_create_on_db()
         
     def login_from_google(self, google_user):
         self.__email = google_user.email()
@@ -42,8 +46,19 @@ class Logged(object):
     
     @property
     def nick(self):
-        return self.__name
+        return self.__nickname
     
+    def __repr__(self):
+        return 'WebUser '+ self.__nickname + ' ('+ self.__email + ')'
+    
+    @classmethod   
+    def fromEmail(self, email):
+        dbuser = Queries.get_db_user(email)
+        webuser = WebUser()
+        if dbuser != None:
+            webuser.login(dbuser.name, dbuser.nickname, email)
+        return webuser
+      
     def get_db_user(self):
         return Queries.get_db_user(self.__email)
            
