@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}FaceLogin - Fables{% endblock %}
+
+{% block main %}
+
+<div class="page-header">
+    <h1>Add a fable</h1>
+</div>
+<form action="/addfable" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title">
+    <input type="submit">
+</form>
+
+
+<div class="page-header">
+    <h1>List of fables</h1>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Ready</th>
+            <th>Bought</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fable in fables %}
+            <tr>
+                <td>{{fable.title}}</td>
+                <td><input type="checkbox" checked={{fable.ready}}></td>
+                <td><input type="checkbox" checked={{fable.bought}}></td>
+            </tr>
+        {% else %}
+            <tr><td colspan="3">No fables yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+
+

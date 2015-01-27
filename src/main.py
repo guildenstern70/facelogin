@@ -37,6 +37,7 @@ APPLICATION = webapp2.WSGIApplication(
                               ('/deleteuser', pages.DeleteUser),
                               ('/account', pages.Account),
                               ('/login', pages.Login),
+                              ('/addfable', pages.AddFable),
                               ('/logout', pages.Logout)
                              ], debug = True, config = config)
 

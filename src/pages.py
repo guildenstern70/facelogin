@@ -53,8 +53,7 @@ class BasePage(webapp2.RequestHandler):
         else:
             main.log('User not logged in')
                  
-    def _set_template_vals(self, template_vals):   
-        
+    def _set_template_vals(self, template_vals):          
         logout_url = 'javascript:logoutFromFb();'
         if users.get_current_user():
             logout_url = '/logout'
@@ -99,6 +98,22 @@ class Logout(BasePage):
         else:
             redir_url = '/'
         self.redirect(redir_url)
+        
+class AddFable(BasePage):
+    
+    def post(self):
+        title = self.request.get('title')
+        dbuser = db.DbUser.get_from_email(self.logged.email)
+        db.DbFable.create(dbuser, title)
+        self.redirect('/addfable')
+    
+    def get(self):
+        template_values = { 
+            'fables' : db.Queries.get_all_fables(self.logged.email),
+            'currentuser' : self.logged.email
+        }
+        self.render(template_values, 'fables.html')
+    
     
 class DeleteUser(webapp2.RequestHandler):
     

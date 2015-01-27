@@ -1,6 +1,20 @@
 import main
 
 from google.appengine.ext import ndb
+
+class DbFable(ndb.Model):
+    
+    title = ndb.StringProperty()
+    ready = ndb.BooleanProperty()
+    bought = ndb.BooleanProperty()
+    
+    @staticmethod
+    def create(user_db, fable_title):
+        """ Create a new DbFable for user """
+        main.log('Creating NEW DbFable for user ' + str(user_db.nickname))
+        the_fable = DbFable(parent=user_db.key, title=fable_title, ready=False, bought=False)
+        the_fable.put()
+        return the_fable
  
 class DbUser(ndb.Model):
     """ DB Schema: DbUser """
@@ -50,6 +64,11 @@ class DbUser(ndb.Model):
         return not self.__eq__(other)
     
 class Queries():
+    
+    @staticmethod
+    def get_all_fables(user_email):
+        ancestor_key = ndb.Key('DbUser', user_email)
+        return DbFable.query(ancestor=ancestor_key)
     
     @staticmethod
     def get_db_user(user_email):
